@@ -1,31 +1,56 @@
 .App {
   text-align: center;
+  background-color: #16357e;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.App-body {
+  height: calc(100vh - 65px); /* height - header height (.App-header, Header.css) */
+  width: 100%;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.video-well {
+  margin: 0 auto;
+  width: 75%;
+  background: transparent;
+  position: relative;
+}
+
+.overlay-well {
+  background: rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-well button {
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay-well button svg {
+  fill: rgba(255,255,255, 0.3);
+}
+
+.overlay-well button svg #path-play-arrow {
+  fill: white;
+}
+
+.overlay-well button:hover svg {
+  fill: #eaeaea;
 }
 
 @keyframes App-logo-spin {

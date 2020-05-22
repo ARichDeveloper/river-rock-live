@@ -1,0 +1,13 @@
+.App-header {
+    height: 65px;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-header svg {
+    height: 45px;
+    margin-left: 30px;
+    margin-top: 10px;
+    display: inline-block;
+    float: left;
+}
