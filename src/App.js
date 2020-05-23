@@ -3,7 +3,6 @@ import './App.css';
 import Header from './Header/Header';
 import Video from './Video/Video';
 import PlayIcon from './assets/components/PlayIcon';
-import RRLiveIcon from './assets/components/RRLiveIcon';
 
 export default class App extends React.Component{
     backgrounds = [
@@ -34,7 +33,7 @@ export default class App extends React.Component{
     };
 
     render() {
-        const { online, playing, backgroundColor } = this.state;
+        const { online, playing } = this.state;
         return (
             <div className="App" style={{backgroundImage: `url("${this.backgrounds[1]}")`, backgroundColor: !playing ? '#16357e' : '#000' }}>
                 <Header online={online} playing={playing} />

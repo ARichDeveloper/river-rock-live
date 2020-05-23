@@ -15,10 +15,6 @@ export default class RRLiveLogo extends React.Component {
         liveColor: '#000000'
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         let { online } = this.props;
