@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './Header/Header';
-import Video from './Video/Video';
-import PlayIcon from './assets/components/PlayIcon';
+import Player from './Video/Player';
 
 export default class App extends React.Component{
     backgrounds = [
@@ -18,19 +17,21 @@ export default class App extends React.Component{
             online: false,
             playing: false,
             loaded: false,
-            videoUrl: 'https://547f72e6652371c3.mediapackage.us-east-1.amazonaws.com/out/v1/57934146c46d4dd094c9c830d664cd18/index.m3u8',
-            testVideoUrl: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+            videoUrl: 'https://play.boxcast.com/p/fxcb0ucbouiy3uowec2n/v/all-ext.m3u8?Expires=2147483647&Signature=IgzwlzZMley8nuTZVIvgrPwl-Ul32SMKjfJFcT79Q2wNVeTkLYj-hLKIGj~zebIAj-Q~tix1v7P6~odt439VWaHFW42f5KM2olNaxcEZBWYhh841GWbzZ6VvqnamiLp1HmJMEt4XtNBimKrD-19lxj-hhAtGPvBkJsLSHf2ip15vEh5Or9dxRxrlOG2V3fusP1dRL19YwEydyYBDDEQCrnSwlvNR6eCu1~~ZLPHRmYGkLI4dlW5KfmLivngbXwbragGJ7IrqQgHjSoNZfilh~ZrX7UqE5IYdmrC87fXRGhcGrwM8aEnKPZceh-Jp~C8a3CsDp8IpeexjyEStmzJX2Q__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
+            testVideoUrl: 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8',
             backgroundColor: '#16357e'
         }
     }
 
-    componentDidMount() {
-        setTimeout(() => { this.setState({ backgroundColor: '#000', playing: true, online: true, loaded: true }) }, 5000)
+    events = {
+        play: () => {
+            this.setState({ backgroundColor: '#000', playing: true, online: true, loaded: true })
+        },
+
+        pause: () => {
+            this.setState({ backgroundColor: '#16357e', playing: false, online: true, loaded: true })
+        },
     }
-
-    play = () => {
-
-    };
 
     render() {
         const { online, playing } = this.state;
@@ -39,15 +40,7 @@ export default class App extends React.Component{
                 <Header online={online} playing={playing} />
                 <div className="App-body">
                     <div class="video-well">
-
-                        <Video src={this.state.testVideoUrl} />
-                        { !playing &&
-                            <div className="overlay-well" style={{display: 'flex'}}>
-                                <button onClick={() => this.play()}>
-                                    <PlayIcon/>
-                                </button>
-                            </div>
-                        }
+                        <Player src={this.state.videoUrl} events={this.events} />
                     </div>
                 </div>
             </div>

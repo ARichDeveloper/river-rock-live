@@ -1,24 +1,77 @@
-import React from 'react';
-import HlsEvents from './hlsEvents';
-import './video.css'
+import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import minLogo from './../assets/RRLogoMin.png'
+import videojs from 'video.js';
+//import 'videojs-logo';
+import 'video.js/dist/video-js.css';
 
-export default class Player extends React.Component {
-    constructor(props) {
-        super(props);
+const usePlayer = ({ src, events, controls, autoplay }) => {
+    const options = {
+        fill: true,
+        fluid: true,
+        preload: 'auto',
+        html5: {
+            hls: {
+                enableLowInitialPlaylist: true,
+                smoothQualityChange: true,
+                overrideNative: true,
+            },
+        },
+    };
+    const videoRef = useRef(null);
+    const [player, setPlayer] = useState(null);
 
-        this.videoTag = React.createRef();
-        this.state = {
-            liveStream: null
+    useEffect(() => {
+        const vjsPlayer = videojs(videoRef.current, {
+            ...options,
+            controls,
+            autoplay,
+            sources: [src],
+        });
+        setPlayer(vjsPlayer);
+
+        vjsPlayer.on('play', () => {
+           events.play();
+        });
+
+        vjsPlayer.on('pause', () => {
+            events.pause();
+        });
+
+        return () => {
+            if (player !== null) {
+                player.dispose();
+            }
+        };
+    }, []);
+    useEffect(() => {
+        if (player !== null) {
+            player.src({ src });
         }
-    }
+    }, [src]);
 
-    componentDidMount() {
-        HlsEvents.initializeHLS(this.videoTag.current, this.props.src);
-    }
+    return videoRef;
+};
 
-    render() {
-        return (
-            <video id="live-stream" ref={this.videoTag} />
-        )
-    }
-}
+const VideoPlayer = ({ src, events, controls, autoplay }) => {
+    const playerRef = usePlayer({ src, events, controls, autoplay });
+
+    return (
+        <div data-vjs-player>
+            <video ref={playerRef} className="vjs-matrix video-js" />
+        </div>
+    );
+};
+
+VideoPlayer.propTypes = {
+    src: PropTypes.string.isRequired,
+    controls: PropTypes.bool,
+    autoplay: PropTypes.bool,
+};
+
+VideoPlayer.defaultProps = {
+    controls: true,
+    autoplay: false,
+};
+
+export default VideoPlayer;
