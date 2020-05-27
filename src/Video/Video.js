@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import minLogo from './../assets/RRLogoMin.png'
 import videojs from 'video.js';
 //import 'videojs-logo';
 import 'video.js/dist/video-js.css';
