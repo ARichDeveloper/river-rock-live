@@ -3,6 +3,12 @@ import './App.css';
 import Header from './Header/Header';
 import Player from './Video/Player';
 
+async function fetchEndpoint() {
+    let { text } = await( await fetch(`/api/message`)).json();
+    debugger;
+    document.querySelector('#name').textContent = text;
+}
+
 export default class App extends React.Component{
     backgrounds = [
         "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%23000824' points='800 100 0 200 0 800 1600 800 1600 200'/%3E%3Cpolygon fill='%23001049' points='800 200 0 400 0 800 1600 800 1600 400'/%3E%3Cpolygon fill='%2300186d' points='800 300 0 600 0 800 1600 800 1600 600'/%3E%3Cpolygon fill='%23002192' points='1600 800 800 400 0 800'/%3E%3Cpolygon fill='%230029b6' points='1280 800 800 500 320 800'/%3E%3Cpolygon fill='%230031db' points='533.3 800 1066.7 800 800 600'/%3E%3Cpolygon fill='%230039ff' points='684.1 800 914.3 800 800 700'/%3E%3C/g%3E%3C/svg%3E",
@@ -17,10 +23,17 @@ export default class App extends React.Component{
             online: false,
             playing: false,
             loaded: false,
-            videoUrl: 'https://play.boxcast.com/p/fxcb0ucbouiy3uowec2n/v/all-ext.m3u8?Expires=2147483647&Signature=IgzwlzZMley8nuTZVIvgrPwl-Ul32SMKjfJFcT79Q2wNVeTkLYj-hLKIGj~zebIAj-Q~tix1v7P6~odt439VWaHFW42f5KM2olNaxcEZBWYhh841GWbzZ6VvqnamiLp1HmJMEt4XtNBimKrD-19lxj-hhAtGPvBkJsLSHf2ip15vEh5Or9dxRxrlOG2V3fusP1dRL19YwEydyYBDDEQCrnSwlvNR6eCu1~~ZLPHRmYGkLI4dlW5KfmLivngbXwbragGJ7IrqQgHjSoNZfilh~ZrX7UqE5IYdmrC87fXRGhcGrwM8aEnKPZceh-Jp~C8a3CsDp8IpeexjyEStmzJX2Q__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
+            videoUrl: 'https://play.boxcast.com/p/l63eqjrogaieggiusv4b/v/all-ext.m3u8?Expires=2147483647&Signature=IgxS96BlicwQUgrgYlweF4YC0rLLXPRx8pXWM3e31GrbeFWJQcou95XLCoeUpiQ35Ez~YD9iN0yCjm5TNt91b481A9wAp8Hw4ks2ltDE53Siccy92dQJmgWBBpCE4ecbspXiJGDTJ9bB577rOx3WWaaQActJbjiNLExjpnwxGOUvhwoKQd24AJPJSg~rAY44lC9ZjRKESPk8LJ8IcdVY~XHE2suO9eaMcLWOLbZAfkZoZaYDduykGyl-wCF1C52sGof-dTZWObaFqSUgEXlBFjn2cp~ePI~PY6xvYOP4EaLFKJ~Dz9hNK16IgMw4bi1i7KlGLSI1PP7DuVOc0jzsOw__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
             testVideoUrl: 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8',
             backgroundColor: '#16357e'
         }
+    }
+
+
+
+    componentDidMount() {
+        debugger;
+        fetchEndpoint()
     }
 
     events = {
