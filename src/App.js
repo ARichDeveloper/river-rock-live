@@ -3,11 +3,11 @@ import './App.css';
 import Header from './Header/Header';
 import Player from './Video/Player';
 
-async function fetchEndpoint() {
-    let { text } = await( await fetch(`/api/message`)).json();
-    debugger;
-    document.querySelector('#name').textContent = text;
-}
+// async function fetchEndpoint() {
+//     let { text } = await( await fetch(`/api/message`)).json();
+//     debugger;
+//     document.querySelector('#name').textContent = text;
+// }
 
 export default class App extends React.Component{
     backgrounds = [
@@ -23,7 +23,7 @@ export default class App extends React.Component{
             online: false,
             playing: false,
             loaded: false,
-            videoUrl: 'https://play.boxcast.com/p/l63eqjrogaieggiusv4b/v/all-ext.m3u8?Expires=2147483647&Signature=IgxS96BlicwQUgrgYlweF4YC0rLLXPRx8pXWM3e31GrbeFWJQcou95XLCoeUpiQ35Ez~YD9iN0yCjm5TNt91b481A9wAp8Hw4ks2ltDE53Siccy92dQJmgWBBpCE4ecbspXiJGDTJ9bB577rOx3WWaaQActJbjiNLExjpnwxGOUvhwoKQd24AJPJSg~rAY44lC9ZjRKESPk8LJ8IcdVY~XHE2suO9eaMcLWOLbZAfkZoZaYDduykGyl-wCF1C52sGof-dTZWObaFqSUgEXlBFjn2cp~ePI~PY6xvYOP4EaLFKJ~Dz9hNK16IgMw4bi1i7KlGLSI1PP7DuVOc0jzsOw__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
+            videoUrl: 'https://play.boxcast.com/p/jcum6gxzahc65ud6hvyu/v/all-ext.m3u8?Expires=2147483647&Signature=oQwug8GCz~z~CLRNGIZh3FFANK2CU4rzl1j7dzXjjZsYVCx4aGB1VOMwRHQJ6rluEMVRjahi6SSVa9v82KqYEj2s-I0jD4WybUNFSU4XBoM7wo81SgOdbCDDgOG-SxlHuxsrGPM7lTwLHVTxlkOuBGX5gVzMs6E9o0RD~Fs4YvBzA7XSLz-CRWUZ2KV9x8ZYPIbPCDfrCwksicGkdU2GRwxmkGhDJCHPoUCybExP2~CkesAueAsxQqcJbYUsdoXNfVikoq3rpepY5ay7HRH27vImb6i9z42lgYJKi5d2mUqEa2tmemszYuhsqxu4aPZ5~s525ZMG3W35m2cjoH2FqQ__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
             testVideoUrl: 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8',
             backgroundColor: '#16357e'
         }
@@ -31,10 +31,10 @@ export default class App extends React.Component{
 
 
 
-    componentDidMount() {
-        debugger;
-        fetchEndpoint()
-    }
+    // componentDidMount() {
+    //     debugger;
+    //     fetchEndpoint()
+    // }
 
     events = {
         play: () => {
