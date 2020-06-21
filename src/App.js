@@ -23,7 +23,7 @@ export default class App extends React.Component{
             online: false,
             playing: false,
             loaded: false,
-            videoUrl: 'https://play.boxcast.com/p/jcum6gxzahc65ud6hvyu/v/all-ext.m3u8?Expires=2147483647&Signature=oQwug8GCz~z~CLRNGIZh3FFANK2CU4rzl1j7dzXjjZsYVCx4aGB1VOMwRHQJ6rluEMVRjahi6SSVa9v82KqYEj2s-I0jD4WybUNFSU4XBoM7wo81SgOdbCDDgOG-SxlHuxsrGPM7lTwLHVTxlkOuBGX5gVzMs6E9o0RD~Fs4YvBzA7XSLz-CRWUZ2KV9x8ZYPIbPCDfrCwksicGkdU2GRwxmkGhDJCHPoUCybExP2~CkesAueAsxQqcJbYUsdoXNfVikoq3rpepY5ay7HRH27vImb6i9z42lgYJKi5d2mUqEa2tmemszYuhsqxu4aPZ5~s525ZMG3W35m2cjoH2FqQ__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
+            videoUrl: 'https://play.boxcast.com/p/ekrzw3ypbltz9aaohsml/v/all-ext.m3u8?Expires=2147483647&Signature=hHDipU8yLLgh6yCLJy2hFeJbbjhA5dCf-hgRxi~FuFDxPAk~v9lFgeyX9aJJIuK174Seqc8fibLNr8AzVZavXr-AapXWb8s6fPfzT0rCrjVPXeglxvskd6f4XjX4I6hXz39OM5QKkqGnWwcEJlUbVZsSBWXdjb08C9urVOwqvO~ousW~fXDc-q36pmVKq880~ouPeYTgfqVJb5NmrWknJutUOXy1RQRphhXXo-ZXTN4hMqghHu~YAbBF~hcqthiPMqtiBdM7HucYioC5wLr9e69zCgdMrgXfEieMDSpWp1dRqO--zWQ7gMrmdKqTJV0V4qgw3Rsi0qqR0M2KGQOHUg__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
             testVideoUrl: 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8',
             backgroundColor: '#16357e'
         }
