@@ -14,8 +14,8 @@ module.exports = async function (context, req) {
 const getClientCredentials = oauth.client(axios.create(), {
     url: 'https://auth.boxcast.com/oauth2/token',
     grant_type: 'client_credentials',
-    client_id: 'ZZZZ',
-    client_secret: 'ZZZ',
+    client_id: 'ZZZZZZ',
+    client_secret: 'ZZZZZ',
     scope: 'owner'
 });
 
