@@ -10,5 +10,4 @@ module.exports = async function (context, req) {
 
 const getClientCredentials = () => {
     return false;
-}
-
+};
