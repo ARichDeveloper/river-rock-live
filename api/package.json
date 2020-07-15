@@ -6,6 +6,8 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "to-camel-case": "^1.0.0"
+  },
   "devDependencies": {}
 }
