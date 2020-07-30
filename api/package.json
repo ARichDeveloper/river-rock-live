@@ -7,7 +7,7 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "to-camel-case": "^1.0.0"
+    "axios": "^0.19.2"
   },
   "devDependencies": {}
 }
