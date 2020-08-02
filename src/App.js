@@ -23,14 +23,14 @@ export default class App extends React.Component{
             online: false,
             playing: false,
             loaded: false,
-            videoUrl: 'https://play.boxcast.com/p/f9s6zy2rowykzmzbhr81/v/all-ext.m3u8?Expires=2147483647&Signature=n~Sgq8PI8woKixyzbEFiIdIWHrdD3ZJzYKUyPOosUr27zn2abwOvaQbSjpdO~ejt6QU4wTd1jw~Xapt5HsCb-7QWm25LoRzzixHXECvyYqT3G2QmZUEqlUMxT4asHv2U7QrJZwUsjmhDnLfQNS5UAoy87R1QE-E~jzDHvBLxrI0OYhdOocuKqpVv6b-GSw04E9ZfNF06Oh7qXbnBgw~rWWP2umsgEtTiCResfB2ErSV8ShQG-PyFlpYZxHe98MT91wtB9flMdFucBah5C41Y8fyL8dkLMB0ef3igsHp3K4TCzB2N5ju2hK0sniEHny0iXL~ORg2RIrTpYR-PDaqKHA__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
+            videoUrl: 'https://play.boxcast.com/p/bequs9eerdkzbx4m8cwz/v/all-ext.m3u8?Expires=2147483647&Signature=l84CB4tNFdcg53WOk4e6vwwxJ74xHivMJhknWgF3fn20nX3aTzWZA87~vczTTW1czOHR1ICqWplZCZyabkkB0WzFLwwud0ZOoUDFams1w8qNnYxNT9D-nyFe9FgEqnURrfNWaFtBo-U8FwD5vVlE75Zx~8t4sEPtx2qY5E1hboD3t3LLA0Yv1y3~aFr40NyYow~AWU2Zu07EiqTrOGiur4PT5B3F1DsUFoETKnI3Efs43AvnoGiDLMCf54GZS9m7IF8MG1mGaLa-iJ3bQUoLFZ3gt2Dp6wyNDxnSg1agGM8I3k3NdKErtBpaDuKvK59JJFo7dFxHl5RxEaN8U4VT9A__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
             testVideoUrl: 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8',
             backgroundColor: '#16357e',
         }
     }
 
     componentWillMount() {
-        this.fetchBroadcasts().then(channels => {        
+        this.fetchBroadcasts().then(channels => {
             const currentChannel = this.getCurrentOrNearestUpcoming(channels);
             const howLong = currentChannel.starts_at.diff(moment())
 
@@ -50,7 +50,7 @@ export default class App extends React.Component{
                     channel.starts_at = moment(channel.starts_at);
                     channel.stops_at = moment(channel.stops_at);
                 });
-    
+
                 resolve(channels);
             }).catch(error => {
                 reject(error)
@@ -62,7 +62,7 @@ export default class App extends React.Component{
 
     getCurrentOrNearestUpcoming(channels) {
         const now = moment();
-        
+
         let current = channels.filter(channel => now.isBetween(channel.starts_at, channel.stops_at));
 
         let future = sortby(channels.filter(channel => now.isBefore(channel.starts_at)), futureChannel => futureChannel.starts_at);
