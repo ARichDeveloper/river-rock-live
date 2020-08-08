@@ -7,8 +7,7 @@ import Header from './Header/Header';
 import Player from './Video/Player';
 
 export default class App extends React.Component{
-    static shortPollCountdownThreshold = 300000; // 5 minutes;
-    static thirtySeconds = 30000 // 30 seconds
+    static thresholdToShowFutureStream = 1800000; // 30 minutes;
 
     backgrounds = [
         "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%23000824' points='800 100 0 200 0 800 1600 800 1600 200'/%3E%3Cpolygon fill='%23001049' points='800 200 0 400 0 800 1600 800 1600 400'/%3E%3Cpolygon fill='%2300186d' points='800 300 0 600 0 800 1600 800 1600 600'/%3E%3Cpolygon fill='%23002192' points='1600 800 800 400 0 800'/%3E%3Cpolygon fill='%230029b6' points='1280 800 800 500 320 800'/%3E%3Cpolygon fill='%230031db' points='533.3 800 1066.7 800 800 600'/%3E%3Cpolygon fill='%230039ff' points='684.1 800 914.3 800 800 700'/%3E%3C/g%3E%3C/svg%3E",
@@ -20,27 +19,67 @@ export default class App extends React.Component{
         super(props);
 
         this.state = {
+            streams: { past: null, current: null, future: null },
             online: false,
             playing: false,
             loaded: false,
-            videoUrl: 'https://play.boxcast.com/p/f9s6zy2rowykzmzbhr81/v/all-ext.m3u8?Expires=2147483647&Signature=n~Sgq8PI8woKixyzbEFiIdIWHrdD3ZJzYKUyPOosUr27zn2abwOvaQbSjpdO~ejt6QU4wTd1jw~Xapt5HsCb-7QWm25LoRzzixHXECvyYqT3G2QmZUEqlUMxT4asHv2U7QrJZwUsjmhDnLfQNS5UAoy87R1QE-E~jzDHvBLxrI0OYhdOocuKqpVv6b-GSw04E9ZfNF06Oh7qXbnBgw~rWWP2umsgEtTiCResfB2ErSV8ShQG-PyFlpYZxHe98MT91wtB9flMdFucBah5C41Y8fyL8dkLMB0ef3igsHp3K4TCzB2N5ju2hK0sniEHny0iXL~ORg2RIrTpYR-PDaqKHA__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
+            m3u8Ready: false,
+            videoUrl: 'https://play.boxcast.com/p/wx4eqexkqgpnx2rixmib/v/all-ext.m3u8?Expires=2147483647&Signature=O9rWIjvqUDBx0wjq~27gKUzKr8urQ3GWtV-HkVEVjYCWM1pskvrjc0uFswrOOKJQ220twJ-LW9gnfurVUIgzIb-4RKVGgJzcnQhKFSvyM-3CNFw5q7W5uI4-cb~0mvaDy0XXo-EkArpz5EutFhhveERJPPtOSfCg~wT4cpZXjgFYnWExOEqDdqro7oWn6COZbw07SzU4z~aVItafG3zpiIlDZWK-gqBJWCCJm~DVtCcAn6PzntI3MbCVro3l78F83geDVJGz8rW99cOAO0xDaWExoQFZhcRDfJfB3wnf~dgVSBJU9URaPEO1U89zaUuZNrAfFrH-KaL4cg9E9DzadQ__&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA',
             testVideoUrl: 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8',
             backgroundColor: '#16357e',
         }
     }
 
     componentWillMount() {
-        this.fetchBroadcasts().then(channels => {        
-            const currentChannel = this.getCurrentOrNearestUpcoming(channels);
-            const howLong = currentChannel.starts_at.diff(moment())
+        // this.fetchBroadcasts().then(channels => {        
+        //     const streams = this.getCurrentOrNearestUpcoming(channels);
+        //     this.initLiveStream(streams)
+        // })
 
-            if (howLong < this.shortPollCountdownThreshold) {
-                // begin short polling;
+        setTimeout(() => {
+            window.executeReactStateChange = (s) => {
+                this.executeEvent(s);
             }
-        })
+        }, 500)
     }
 
-    fetchBroadcasts() {
+    initLiveStream = (streams) => {
+        // Choose which stream to show
+        const stream = this.decideWhichStream(streams);
+
+        if (3000 < this.shortPollCountdownThreshold) {
+            // Show Five Minute Countdown
+        }
+    }
+
+    decideWhichStream = (streams) => {
+        if (streams.current) {
+            return streams.current;
+        } else if (streams.future && streams.future.starts_at.diff(moment())) {
+            //
+        } else {
+            return { type: 'recording', stream: streams.past };
+        }
+    }
+
+    pollM3U8UntilAvailable = () => {
+        let { m3u8Ready } = this.state;
+
+        while(!m3u8Ready) {
+            setTimeout(() => {
+                axios.get(this.state.videoUrl)
+                .then(() => {
+                    this.setState({ m3u8Ready: true })
+                })
+                .catch(() => {
+                    // The file isn't available yet.
+                    // Do nothing.
+                })
+            }, 7500)
+        }
+    }
+
+    fetchBroadcasts = () => {
         let channels = {};
 
         const promise = new Promise((resolve, reject) =>  {
@@ -60,24 +99,48 @@ export default class App extends React.Component{
         return promise;
     }
 
-    getCurrentOrNearestUpcoming(channels) {
+    getCurrentOrNearestUpcoming = (channels) => {
         const now = moment();
+        debugger;
+
+        let recentPast = sortby(channels.filter(channel => channel.starts_at.isBefore(now)), pastChannel => pastChannel.starts_at).reverse();
         
         let current = channels.filter(channel => now.isBetween(channel.starts_at, channel.stops_at));
 
         let future = sortby(channels.filter(channel => now.isBefore(channel.starts_at)), futureChannel => futureChannel.starts_at);
 
-        return current.length ? current[0] : future[0];
+        return { past: recentPast[0], current: current[0], future: future[0] };
     }
 
-    events = {
-        play: () => {
-            this.setState({ backgroundColor: '#000', playing: true, online: true, loaded: true })
-        },
+    // events = {
+    //     play: () => {
+    //         this.setState({ backgroundColor: '#000', playing: true, online: true, loaded: true })
+    //     },
 
-        pause: () => {
-            this.setState({ backgroundColor: '#16357e', playing: false, online: true, loaded: true })
-        },
+    //     pause: () => {
+    //         this.setState({ backgroundColor: '#16357e', playing: false, online: true, loaded: true })
+    //     },
+    // }
+
+    darkenEvent = () => {
+        this.setState({ backgroundColor: '#000', playing: true, online: true, loaded: true })
+    }
+
+    standardColorsEvent = () => {
+        this.setState({ backgroundColor: '#16357e', playing: false, online: true, loaded: true })
+    }
+
+    executeEvent(state) {
+        switch(state) {
+            case 'play':
+                this.darkenEvent();
+            break;
+            case 'ended':
+            case 'pause':
+            case 'error':
+                this.standardColorsEvent();
+            break;
+        }
     }
 
     render() {
@@ -87,7 +150,7 @@ export default class App extends React.Component{
                 <Header online={online} playing={playing} />
                 <div className="App-body">
                     <div class="video-well">
-                        <Player src={videoUrl} events={this.events} />
+                        <div id="boxcast-widget-ekrzw3ypbltz9aaohsml"></div>
                     </div>
                 </div>
             </div>

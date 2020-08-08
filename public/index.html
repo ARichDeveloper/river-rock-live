@@ -41,4 +41,36 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  
+  <script type="text/javascript" charset="utf-8">
+    console.log("Load scripts");
+    window.executeReactStateChange = (a) => {alert(a)};
+    window.onBoxcastStateChanged = (s) => {
+      console.log("Exec:onBoxcastStateChanged");
+      window.executeReactStateChange(s);
+    };
+    (function(d, s, c, o) {
+      var js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+      var h = (('https:' == document.location.protocol) ? 'https:' : 'http:');
+      js.src = h + '//js.boxcast.com/v3.min.js';
+      js.onload = function() { 
+        window.boxcastPlayer = boxcast.noConflict()('#boxcast-widget-'+c)
+        window.boxcastPlayer.loadChannel(c, o); 
+      };
+      js.charset = 'utf-8';
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'ekrzw3ypbltz9aaohsml', {
+        "showTitle":0,
+        "showDescription":0,
+        "showHighlights":0,
+        "showRelated":false,
+        "defaultVideo":"next",
+        "market":"house-of-worship",
+        "showDocuments":false,
+        "showIndex":false,
+        "showDonations":false,
+        "showCountdown":true,
+        "onPlayerStateChanged": window.onBoxcastStateChanged
+      }));
+  </script>
 </html>

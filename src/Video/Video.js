@@ -54,6 +54,18 @@ const usePlayer = ({ src, events, controls, autoplay }) => {
 };
 
 const VideoPlayer = ({ src, events, controls, autoplay }) => {
+    const channel = 'ekrzw3ypbltz9aaohsml';
+    const options = {
+        "showTitle": 0,
+        "showDescription": 0,
+        "showHighlights": 0,
+        "showRelated": false,
+        "defaultVideo": "next",
+        "market": "house-of-worship",
+        "showDocuments": false,
+        "showIndex": false,
+        "showDonations": false
+    }
     const playerRef = usePlayer({ src, events, controls, autoplay });
 
     return (
