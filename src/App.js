@@ -4,7 +4,6 @@ import moment from 'moment';
 import sortby from 'lodash.sortby';
 import './App.css';
 import Header from './Header/Header';
-import Player from './Video/Player';
 
 export default class App extends React.Component{
     static thresholdToShowFutureStream = 1800000; // 30 minutes;
@@ -31,24 +30,11 @@ export default class App extends React.Component{
     }
 
     componentWillMount() {
-        // this.fetchBroadcasts().then(channels => {        
-        //     const streams = this.getCurrentOrNearestUpcoming(channels);
-        //     this.initLiveStream(streams)
-        // })
         setTimeout(() => {
             window.executeReactStateChange = (s) => {
                 this.executeEvent(s);
             }
         }, 500)
-    }
-
-    initLiveStream = (streams) => {
-        // Choose which stream to show
-        const stream = this.decideWhichStream(streams);
-
-        if (3000 < this.shortPollCountdownThreshold) {
-            // Show Five Minute Countdown
-        }
     }
 
     decideWhichStream = (streams) => {
@@ -136,13 +122,14 @@ export default class App extends React.Component{
             case 'ended':
             case 'pause':
             case 'error':
+            default:
                 this.standardColorsEvent();
             break;
         }
     }
 
     render() {
-        const { online, playing, videoUrl } = this.state;
+        const { online, playing } = this.state;
         return (
             <div className="App" style={{backgroundImage: `url("${this.backgrounds[1]}")`, backgroundColor: !playing ? '#16357e' : '#000' }}>
                 <Header online={online} playing={playing} />
