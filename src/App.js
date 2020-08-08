@@ -35,7 +35,6 @@ export default class App extends React.Component{
         //     const streams = this.getCurrentOrNearestUpcoming(channels);
         //     this.initLiveStream(streams)
         // })
-
         setTimeout(() => {
             window.executeReactStateChange = (s) => {
                 this.executeEvent(s);
@@ -89,7 +88,7 @@ export default class App extends React.Component{
                     channel.starts_at = moment(channel.starts_at);
                     channel.stops_at = moment(channel.stops_at);
                 });
-    
+
                 resolve(channels);
             }).catch(error => {
                 reject(error)
@@ -101,10 +100,9 @@ export default class App extends React.Component{
 
     getCurrentOrNearestUpcoming = (channels) => {
         const now = moment();
-        debugger;
 
         let recentPast = sortby(channels.filter(channel => channel.starts_at.isBefore(now)), pastChannel => pastChannel.starts_at).reverse();
-        
+
         let current = channels.filter(channel => now.isBetween(channel.starts_at, channel.stops_at));
 
         let future = sortby(channels.filter(channel => now.isBefore(channel.starts_at)), futureChannel => futureChannel.starts_at);
