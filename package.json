@@ -14,7 +14,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "video.js": "^7.7.6",
+    "video.js": "^7.20.3",
     "videojs-countdown-start": "^1.0.1",
     "videojs-share": "^3.2.1"
   },
